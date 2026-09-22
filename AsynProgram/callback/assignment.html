@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Processing Callback</title>
+</head>
+<body>
+
+<script>
+
+function DoPayment(amount, callback){
+
+    console.log("Processing Payment :" + amount);
+
+    callback();
+}
+
+DoPayment(1000, function(){
+
+    console.log("Payment Successful");
+
+});
+
+</script>
+
+</body>
+</html>

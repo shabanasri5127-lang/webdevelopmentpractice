@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script> //Function - help to perform a specific task
+        function myfunction(){
+            console.log("Hello World");
+        }
+        myfunction();
+        //2.function with parameter(parameter is a variable which is used to pass data to a function)
+        function myfunction2(name){
+            console.log("Hello " + name);
+        }
+        myfunction2("Alice");
+        //modern way to write function
+        function myfunction3(name){
+            console.log(`Hello ${name}`);
+        }
+        myfunction3("Bob");
+        myfunction3("Charlie"); 
+        //3.function with return value
+        function myfunction4(price, quantity){
+            return price * quantity;
+        }
+        let total = myfunction4(10, 5);
+        console.log(total);
+        //4.functionwith arrow function
+        const myfunction5 = (name) => {
+            console.log(`Hello ${name}`);
+        }
+        myfunction5("David");
+        let abc = () => {
+            console.log("Hello World");
+        }
+        abc();//calling function with a variqable
+
+        
+    </script>
+</body>
+</html>

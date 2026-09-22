@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //operators- used to perform operations on variables and values
+        //1.arithmetic operators- used to perform arithmetic operations on numbers(-,+,*,/,%,++,--)
+
+        let num1 = 10;
+        let num2 = 5;
+        console.log("Addition: " + (num1 + num2));
+        console.log("Subtraction: " + (num1 - num2));
+        console.log("Multiplication: " + (num1 * num2));
+        console.log("Division: " + (num1 / num2));
+        console.log("Modulus: " + (num1 % num2));
+        console.log("Increment: " + (++num1));
+        console.log("Decrement: " + (--num2));
+        //% modulus operator- returns the remainder of a division operation
+        console.log(13 % 2);
+        console.log(2 % 9);
+        console.log(13 % 4);
+        //2. assignment operators- used to assign values to variables(=,+=,-=,*=,/=,%=)
+        let x = 5;
+        x += 3;
+        x -= 2; // x = x - 2
+        x *= 2; // x = x * 2    
+        console.log("x after += 3   : " + x);
+        console.log("x after -= 2   : " + x);
+        console.log("x after *= 2   : " + x);
+        
+        //3. comparison operators- used to compare values(==,===,!=,!==,>,<,>=,<=)
+        let a = 10;
+        let b = 8;
+        console.log("a == b: " + (a == b)); // true
+        console.log("a === b: " + (a === b)); // false
+        console.log("a != b: " + (a != b)); // false
+        console.log("a !== b: " + (a !== b)); // true
+        console.log("a > b: " + (a > b)); // false
+        console.log("a < b: " + (a < b)); // false
+        console.log("a >= b: " + (a >= b)); // true
+        console.log("a <= b: " + (a <= b)); // true
+      //== equality operator- compares values only
+        //=== strict equality operator- compares values and data types
+        let height = 180;
+        let weight = "180";
+        //=== is safe option for mordern programming as it checks both value and data type
+
+        console.log("height == weight: " + (height == weight)); // true
+        console.log("height === weight: " + (height === weight)); // false
+
+        //4. logical operators- used to combine multiple conditions(&&,||,!)
+        // and operator(&&)- returns true if both conditions are true
+        // or operator(||)- returns true if at least one condition is true
+        // not operator(!)- returns true if the condition is false.
+        let c = false;
+        let d = 1000;
+        console.log("c && d: " + (c && d >= 10)); // false
+        console.log("c || d: " + (c || d)); // true
+        console.log("!c: " + (!c)); // true
+
+        let netflixSubscription = true;
+        console.log(netflixSubscription ); // true
+        let amazonSubscription = false;
+        console.log(amazonSubscription); // false
+
+        console.log("netflixSubscription && amazonSubscription: " + (netflixSubscription && amazonSubscription)); // false
+        console.log("netflixSubscription || amazonSubscription: " + (netflixSubscription || amazonSubscription)); // true
+        console.log("!netflixSubscription: " + (!netflixSubscription)); // false
+
+    </script>
+</body>
+</html>

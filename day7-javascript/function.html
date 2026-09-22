@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+        //function - block of code which performs a specific task
+        //function is reusable
+        //function is defined using 'function' keyword
+
+        function greetUser() {
+            console.log("good evening , User!");
+        }
+
+        //calling the function then only the code inside the function will be executed.
+        greetUser();
+        //2.function with parameters- parameters are used to pass values to the function.
+        function greetUserWithName(name) {
+            console.log("Hello, " + name + "!");
+        }
+        greetUserWithName("John");
+        greetUserWithName("Alice");
+        function greetUserWithNameAndAge(name, age) {
+            console.log("Hello, " + name + "! You are " + age + " years old.");
+        }
+
+        //3.return function
+        function addNumbers(num1, num2) {
+            return num1 + num2;
+        }
+        addNumbers(5, 10);
+        let result = addNumbers(5, 10);
+        console.log("Sum: " + result);
+       
+
+        function addNumbers(num1, num2) {
+            let sum = num1 + num2;
+            console.log("Sum: " + sum);
+        }
+
+        addNumbers(5, 10);
+        addNumbers(20, 30);
+    </script>
+</body>
+</html>

@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="SkillBridge — bridge your skills to your dream career: internships, mentors, AI guidance, resume building and mock interviews." />
+  <title>SkillBridge — Bridge Your Skills to Your Dream Career</title>
+
+  <!-- Poppins font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind Play CDN for rapid prototyping -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind theme extension
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563EB',
+            accent: '#7C3AED',
+            backdrop: '#0F172A'
+          },
+          borderRadius: {
+            lg: '16px'
+          },
+          fontFamily: {
+            poppins: ['Poppins', 'ui-sans-serif', 'system-ui']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0f172a;
+      --bg-soft: #111827;
+      --surface: rgba(15, 23, 42, 0.7);
+      --glass: rgba(255, 255, 255, 0.04);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --muted-strong: #94a3b8;
+      --input: rgba(255, 255, 255, 0.04);
+      --input-border: rgba(148, 163, 184, 0.2);
+      --shadow: rgba(2, 6, 23, 0.52);
+      --page-glow: rgba(37,99,235,0.25);
+    }
+
+    body.light-mode {
+      color-scheme: light;
+      --bg: #f8fafc;
+      --bg-soft: #eef2ff;
+      --surface: rgba(255, 255, 255, 0.75);
+      --glass: rgba(255, 255, 255, 0.82);
+      --glass-border: rgba(148, 163, 184, 0.28);
+      --text: #0f172a;
+      --muted: #475569;
+      --muted-strong: #64748b;
+      --input: rgba(148, 163, 184, 0.06);
+      --input-border: rgba(148, 163, 184, 0.3);
+      --shadow: rgba(15, 23, 42, 0.08);
+      --page-glow: rgba(99, 102, 241, 0.18);
+    }
+
+    html,body { font-family: Poppins, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* Glassmorphism card base */
+    .glass {
+      background: var(--glass);
+      backdrop-filter: blur(8px) saturate(120%);
+      -webkit-backdrop-filter: blur(8px) saturate(120%);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 6px 24px var(--shadow);
+      border-radius: 16px;
+    }
+
+    /* Floating shapes animation */
+    .float-anim { animation: float 6s ease-in-out infinite; }
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-12px) translateX(6px); }
+      100% { transform: translateY(0) translateX(0); }
+    }
+
+    /* Smooth scroll for anchor links */
+    html { scroll-behavior: smooth; }
+
+    /* subtle entrance */
+    .reveal { opacity: 0; transform: translateY(10px); transition: opacity 600ms ease, transform 600ms ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Chat styles */
+    .chat-bubble { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 10px 14px; }
+
+    /* Light mode utility overrides */
+    body.light-mode .text-slate-300,
+    body.light-mode .text-slate-200,
+    body.light-mode .text-slate-400,
+    body.light-mode .text-slate-500 {
+      color: var(--muted) !important;
+    }
+
+    body.light-mode .text-white,
+    body.light-mode .text-slate-100 {
+      color: var(--text) !important;
+    }
+
+    body.light-mode .bg-white\/5,
+    body.light-mode .bg-white\/6,
+    body.light-mode .bg-white\/3,
+    body.light-mode .bg-white\/2,
+    body.light-mode .bg-white\/4 {
+      background-color: rgba(148, 163, 184, 0.08) !important;
+    }
+
+    body.light-mode footer {
+      background: rgba(148, 163, 184, 0.08);
+    }
+
+    body.light-mode .chat-bubble {
+      background: rgba(148, 163, 184, 0.08);
+    }
+
+    /* Accessibility helpers */
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  </style>
+</head>
+<body class="antialiased leading-relaxed dark-mode">
+  <!-- Navigation -->
+  <header class="fixed inset-x-0 top-4 z-40">
+    <nav class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex items-center justify-between glass py-3">
+      <div class="flex items-center gap-4">
+        <a href="#home" class="flex items-center gap-3 text-white">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">SB</div>
+          <span class="font-semibold text-lg">SkillBridge</span>
+        </a>
+      </div>
+
+      <ul class="hidden md:flex items-center gap-6 text-sm text-slate-300">
+        <li><a href="#home" class="hover:text-white">Home</a></li>
+        <li><a href="#features" class="hover:text-white">Features</a></li>
+        <li><a href="#internships" class="hover:text-white">Internships</a></li>
+        <li><a href="#mentors" class="hover:text-white">Mentors</a></li>
+        <li><a href="#pricing" class="hover:text-white">Pricing</a></li>
+        <li><a href="#about" class="hover:text-white">About</a></li>
+        <li><a href="#contact" class="hover:text-white">Contact</a></li>
+      </ul>
+
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" type="button" aria-label="Toggle light and dark mode" class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200 transition hover:bg-white/10">
+          <span class="theme-icon">🌙</span>
+          <span class="theme-label">Dark</span>
+        </button>
+        <a href="#login" class="text-sm text-slate-300 hover:text-white">Login</a>
+        <a href="#login" class="ml-2 px-4 py-2 rounded-lg bg-gradient-to-r from-primary to-accent font-semibold text-white shadow hover:opacity-95">Get Started</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="pt-28">
+    <!-- Hero -->
+    <section id="home" class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 lg:py-28 relative overflow-hidden">
+      <!-- floating shapes -->
+      <div class="absolute -right-16 -top-16 w-72 h-72 rounded-2xl bg-gradient-to-br from-primary to-accent opacity-30 blur-3xl float-anim"></div>
+      <div class="absolute left-8 bottom-[-40px] w-56 h-56 rounded-full bg-gradient-to-br from-accent to-primary opacity-20 blur-2xl float-anim"></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-7">
+          <div class="reveal" style="transition-delay:150ms">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
+              Bridge Your Skills to Your Dream Career
+            </h1>
+            <p class="mt-4 text-slate-300 max-w-2xl text-lg">
+              Find internships, build your resume, connect with mentors, practice interviews, and grow your career—all in one platform.
+            </p>
+
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href="#get-started" class="px-6 py-3 rounded-lg bg-gradient-to-r from-primary to-accent font-semibold shadow-lg">Get Started</a>
+              <a href="#features" class="px-6 py-3 rounded-lg border border-white/10 text-slate-200 hover:bg-white/5">Explore Features</a>
+            </div>
+
+            <!-- Stats cards -->
+            <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div class="glass p-4 text-center">
+                <div class="text-2xl font-bold counter" data-target="50000">0</div>
+                <div class="text-xs text-slate-300 mt-1">Students</div>
+              </div>
+              <div class="glass p-4 text-center">
+                <div class="text-2xl font-bold counter" data-target="10000">0</div>
+                <div class="text-xs text-slate-300 mt-1">Internships</div>
+              </div>
+              <div class="glass p-4 text-center">
+                <div class="text-2xl font-bold counter" data-target="500">0</div>
+                <div class="text-xs text-slate-300 mt-1">Companies</div>
+              </div>
+              <div class="glass p-4 text-center">
+                <div class="text-2xl font-bold counter" data-target="1000">0</div>
+                <div class="text-xs text-slate-300 mt-1">Mentors</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Illustration / Dashboard preview -->
+        <div class="lg:col-span-5">
+          <div class="glass p-5 sm:p-6 shadow-2xl">
+            <!-- Minimal dashboard preview -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <img src="https://images.unsplash.com/photo-1531123414780-f0b2e6f1f1d6?auto=format&fit=crop&w=64&q=60" alt="avatar" class="w-12 h-12 rounded-lg object-cover" />
+                <div>
+                  <div class="text-sm font-semibold">Shabana R.</div>
+                  <div class="text-xs text-slate-300">Computer Science • 3rd Year</div>
+                </div>
+              </div>
+              <div class="text-xs text-slate-300">Career Score <span class="font-semibold text-white">78</span></div>
+            </div>
+
+            <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-4 bg-gradient-to-br from-white/3 to-white/2 rounded-lg">
+                <div class="flex items-center justify-between">
+                  <div class="text-xs text-slate-300">Progress</div>
+                  <div class="text-sm font-semibold">62%</div>
+                </div>
+                <div class="h-2 bg-white/6 mt-3 rounded-full overflow-hidden">
+                  <div class="h-2 bg-gradient-to-r from-primary to-accent rounded-full" style="width:62%"></div>
+                </div>
+              </div>
+
+              <div class="p-4 bg-gradient-to-br from-white/3 to-white/2 rounded-lg">
+                <div class="text-xs text-slate-300">Upcoming Interview</div>
+                <div class="mt-2 font-semibold">Frontend Intern @ NovaTech</div>
+                <div class="text-xs text-slate-300 mt-1">Aug 28 · 10:00 AM</div>
+              </div>
+
+              <div class="p-4 bg-gradient-to-br from-white/3 to-white/2 rounded-lg sm:col-span-2">
+                <div class="text-xs text-slate-300">Recommended Internships</div>
+                <div class="mt-3 grid grid-cols-1 gap-2">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <div class="font-semibold">Frontend Intern</div>
+                      <div class="text-xs text-slate-300">NovaTech · Remote</div>
+                    </div>
+                    <button class="px-3 py-1 text-sm rounded bg-primary/80">Apply</button>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <div class="font-semibold">UI/UX Intern</div>
+                      <div class="text-xs text-slate-300">PixelWorks · Onsite</div>
+                    </div>
+                    <button class="px-3 py-1 text-sm rounded bg-primary/80">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Login -->
+    <section id="login" class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-14 lg:py-20">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div class="reveal">
+          <span class="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">Welcome back</span>
+          <h2 class="mt-4 text-3xl sm:text-4xl font-extrabold leading-tight">Login to continue building your career.</h2>
+          <p class="mt-4 text-slate-300 max-w-xl">Track internships, manage your roadmap, reconnect with mentors, and keep your momentum with a personalized SkillBridge dashboard.</p>
+
+          <div class="mt-6 space-y-4">
+            <div class="flex items-center gap-3 glass p-3">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent text-lg">✓</div>
+              <div>
+                <div class="font-semibold">Career dashboard</div>
+                <div class="text-sm text-slate-300">See your progress, saved roles and next actions.</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 glass p-3">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent text-lg">★</div>
+              <div>
+                <div class="font-semibold">AI mentor support</div>
+                <div class="text-sm text-slate-300">Ask for feedback, learning plans and role-specific guidance.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass p-6 sm:p-8 reveal" style="transition-delay:150ms">
+          <div class="mb-6 flex items-center justify-between">
+            <div>
+              <p class="text-sm text-slate-300">SkillBridge</p>
+              <h3 class="text-2xl font-bold">Sign in</h3>
+            </div>
+            <div class="rounded-full bg-gradient-to-r from-primary to-accent px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">Frontend</div>
+          </div>
+
+          <form id="login-form" class="space-y-4">
+            <div>
+              <label for="email" class="mb-2 block text-sm font-medium text-slate-200">Email</label>
+              <input id="email" type="email" placeholder="you@example.com" class="w-full rounded-xl border border-white/10 bg-white/3 px-4 py-3 text-slate-100 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30" required />
+            </div>
+
+            <div>
+              <label for="password" class="mb-2 block text-sm font-medium text-slate-200">Password</label>
+              <input id="password" type="password" placeholder="Enter your password" class="w-full rounded-xl border border-white/10 bg-white/3 px-4 py-3 text-slate-100 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30" required />
+            </div>
+
+            <div class="flex items-center justify-between text-sm text-slate-300">
+              <label class="inline-flex items-center gap-2">
+                <input type="checkbox" class="h-4 w-4 rounded border-white/10 bg-white/5 text-primary focus:ring-primary" />
+                Remember me
+              </label>
+              <a href="#" class="text-primary hover:opacity-90">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="w-full rounded-xl bg-gradient-to-r from-primary to-accent px-4 py-3 font-semibold text-white shadow-lg shadow-primary/20 transition hover:opacity-95">Login</button>
+
+            <div id="login-status" class="hidden rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-300"></div>
+
+            <div class="relative my-4">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-white/10"></div>
+              </div>
+              <div class="relative flex justify-center text-xs uppercase tracking-[0.2em] text-slate-400">
+                <span class="bg-transparent px-2">Or continue with</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <button type="button" class="rounded-xl border border-white/10 bg-white/3 px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/5">Google</button>
+              <button type="button" class="rounded-xl border border-white/10 bg-white/3 px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/5">GitHub</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-14 lg:py-20">
+      <h2 class="text-2xl font-semibold">Features</h2>
+      <p class="mt-2 text-slate-300 max-w-2xl">Powerful career tools built for students, mentors and recruiters — packaged in a modern, AI-first experience.</p>
+
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- feature card template -->
+        <div class="glass p-5 hover:scale-105 transition-transform reveal">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <!-- icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="white"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16h6"/></svg>
+            </div>
+            <div>
+              <div class="font-semibold">AI Career Mentor</div>
+              <div class="text-xs text-slate-300">Personalized learning and career plan from an AI mentor.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass p-5 hover:scale-105 transition-transform reveal">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="white"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"/></svg>
+            </div>
+            <div>
+              <div class="font-semibold">Internship Portal</div>
+              <div class="text-xs text-slate-300">Find and apply to verified internships with one-click.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass p-5 hover:scale-105 transition-transform reveal">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="white"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>
+            </div>
+            <div>
+              <div class="font-semibold">Resume Builder</div>
+              <div class="text-xs text-slate-300">Create ATS-friendly resumes in minutes.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass p-5 hover:scale-105 transition-transform reveal">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="white"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7"/></svg>
+            </div>
+            <div>
+              <div class="font-semibold">Mock Interviews</div>
+              <div class="text-xs text-slate-300">Practice with AI/mentor-led mock interviews and get feedback.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass p-5 hover:scale-105 transition-transform reveal">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="white"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-4 0-6 1.5-6 4v4h12v-4c0-2.5-2-4-6-4z"/></svg>
+            </div>
+            <div>
+              <div class="font-semibold">Freelance Hub</div>
+              <div class="text-xs text-slate-300">Find short-term projects to build your portfolio and earn.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass p-5 hover:scale-105 transition-transform reveal">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="white"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3M16 7V3M3 11h18M5 21h14a2 2 0 002-2V11H3v8a2 2 0 002 2z"/></svg>
+            </div>
+            <div>
+              <div class="font-semibold">Mentor Connect</div>
+              <div class="text-xs text-slate-300">Book sessions with industry mentors and get career guidance.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass p-5 hover:scale-105 transition-transform reveal">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="white"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2"/></svg>
+            </div>
+            <div>
+              <div class="font-semibold">Skill Learning</div>
+              <div class="text-xs text-slate-300">Curated courses and projects to build real skills.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass p-5 hover:scale-105 transition-transform reveal">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="white"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M7 3v4M17 3v4M5 21h14a2 2 0 002-2V7H3v12a2 2 0 002 2z"/></svg>
+            </div>
+            <div>
+              <div class="font-semibold">Career Analytics</div>
+              <div class="text-xs text-slate-300">Insights on applications, skills and opportunities.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Internships -->
+    <section id="internships" class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-10">
+      <h2 class="text-2xl font-semibold">Internships</h2>
+      <p class="text-slate-300 mt-2">Explore verified internships matched to your profile.</p>
+
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- internship card -->
+        <article class="glass p-4">
+          <div class="flex items-start gap-4">
+            <img src="https://via.placeholder.com/64" alt="Company logo" class="w-16 h-16 rounded-md object-cover" />
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="font-semibold">NovaTech</div>
+                  <div class="text-xs text-slate-300">Frontend Intern · Remote</div>
+                </div>
+                <div class="text-sm font-semibold">$300/mo</div>
+              </div>
+
+              <div class="mt-3 flex items-center gap-2">
+                <button class="px-3 py-1 rounded bg-primary/80 text-sm">Apply</button>
+                <button class="px-3 py-1 rounded border border-white/10 text-sm">Save</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="glass p-4">
+          <div class="flex items-start gap-4">
+            <img src="https://via.placeholder.com/64" alt="Company logo" class="w-16 h-16 rounded-md object-cover" />
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="font-semibold">PixelWorks</div>
+                  <div class="text-xs text-slate-300">UI/UX Intern · Onsite</div>
+                </div>
+                <div class="text-sm font-semibold">$250/mo</div>
+              </div>
+
+              <div class="mt-3 flex items-center gap-2">
+                <button class="px-3 py-1 rounded bg-primary/80 text-sm">Apply</button>
+                <button class="px-3 py-1 rounded border border-white/10 text-sm">Save</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="glass p-4">
+          <div class="flex items-start gap-4">
+            <img src="https://via.placeholder.com/64" alt="Company logo" class="w-16 h-16 rounded-md object-cover" />
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="font-semibold">DataHive</div>
+                  <div class="text-xs text-slate-300">Data Analyst Intern · Remote</div>
+                </div>
+                <div class="text-sm font-semibold">$350/mo</div>
+              </div>
+
+              <div class="mt-3 flex items-center gap-2">
+                <button class="px-3 py-1 rounded bg-primary/80 text-sm">Apply</button>
+                <button class="px-3 py-1 rounded border border-white/10 text-sm">Save</button>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Mentors -->
+    <section id="mentors" class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-10">
+      <h2 class="text-2xl font-semibold">Mentors</h2>
+      <p class="text-slate-300 mt-2">Industry experts ready to guide you.</p>
+
+      <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="glass p-4 flex items-center gap-4">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=60" alt="Mentor" class="w-16 h-16 rounded-full object-cover" />
+          <div class="flex-1">
+            <div class="font-semibold">Priya Kapoor</div>
+            <div class="text-xs text-slate-300">Senior Engineer @ NovaTech · 8 yrs</div>
+          </div>
+          <div>
+            <button class="px-3 py-1 rounded bg-accent/90">Book</button>
+          </div>
+        </div>
+
+        <div class="glass p-4 flex items-center gap-4">
+          <img src="https://images.unsplash.com/photo-1545996124-1d58e6e1d6f0?auto=format&fit=crop&w=80&q=60" alt="Mentor" class="w-16 h-16 rounded-full object-cover" />
+          <div class="flex-1">
+            <div class="font-semibold">Arjun Mehta</div>
+            <div class="text-xs text-slate-300">Product Manager @ PixelWorks · 10 yrs</div>
+          </div>
+          <div>
+            <button class="px-3 py-1 rounded bg-accent/90">Book</button>
+          </div>
+        </div>
+
+        <div class="glass p-4 flex items-center gap-4">
+          <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=crop&w=80&q=60" alt="Mentor" class="w-16 h-16 rounded-full object-cover" />
+          <div class="flex-1">
+            <div class="font-semibold">Leena Sharma</div>
+            <div class="text-xs text-slate-300">Data Scientist @ DataHive · 7 yrs</div>
+          </div>
+          <div>
+            <button class="px-3 py-1 rounded bg-accent/90">Book</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Assistant Chat -->
+    <section id="ai" class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
+      <h2 class="text-2xl font-semibold">AI Assistant</h2>
+      <p class="text-slate-300 mt-2">Get AI career recommendations instantly.</p>
+
+      <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 glass p-4">
+          <div id="chat" class="h-64 overflow-auto p-3 space-y-3" aria-live="polite">
+            <div class="chat-bubble text-sm text-slate-300">Student: "I want to become a Full Stack Developer."</div>
+            <div class="chat-bubble text-sm bg-white/5">AI: "Based on your profile, I recommend learning HTML, CSS, JavaScript, React, Node.js, MongoDB, and building three real-world projects."</div>
+          </div>
+
+          <form id="chat-form" class="mt-3 flex gap-2">
+            <input id="chat-input" class="flex-1 rounded-lg p-3 bg-white/3 border border-white/6 focus:outline-none" placeholder="Ask the AI (e.g., 'Which projects should I build?')" aria-label="Chat input" />
+            <button class="px-4 py-2 rounded bg-primary/90">Send</button>
+          </form>
+        </div>
+
+        <aside class="glass p-4">
+          <h3 class="font-semibold">Suggested Plan</h3>
+          <ol class="mt-3 text-sm text-slate-300 space-y-2">
+            <li>1. Learn HTML, CSS, JS</li>
+            <li>2. Build 3 projects (Portfolio, E-commerce, CRUD App)</li>
+            <li>3. Apply to 10 internships/week</li>
+            <li>4. Schedule mock interview</li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section id="stories" class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
+      <h2 class="text-2xl font-semibold">Success Stories</h2>
+      <p class="text-slate-300 mt-2">Real students who found internships and careers with SkillBridge.</p>
+
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <blockquote class="glass p-5">
+          <div class="flex items-center gap-3">
+            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="student" class="w-12 h-12 rounded-full object-cover" />
+            <div>
+              <div class="font-semibold">Aisha R.</div>
+              <div class="text-xs text-slate-300">Placed at NovaTech</div>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-slate-300">"SkillBridge's mock interviews and mentor sessions helped me land my first internship. The AI roadmap was spot on."</p>
+        </blockquote>
+
+        <blockquote class="glass p-5">
+          <div class="flex items-center gap-3">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="student" class="w-12 h-12 rounded-full object-cover" />
+            <div>
+              <div class="font-semibold">Rohit S.</div>
+              <div class="text-xs text-slate-300">Placed at DataHive</div>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-slate-300">"I built projects from the recommended list and got immediate responses from recruiters. Highly recommend."</p>
+        </blockquote>
+
+        <blockquote class="glass p-5">
+          <div class="flex items-center gap-3">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="student" class="w-12 h-12 rounded-full object-cover" />
+            <div>
+              <div class="font-semibold">Nina P.</div>
+              <div class="text-xs text-slate-300">Freelancer</div>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-slate-300">"The freelance hub helped me find paid projects while studying. The experience boosts were invaluable."</p>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
+      <h2 class="text-2xl font-semibold">About SkillBridge</h2>
+      <p class="text-slate-300 mt-2 max-w-2xl">SkillBridge helps students and early-career professionals bridge the gap between learning and meaningful work — through guided learning plans, mentor connections, practical projects and AI-powered career advice.</p>
+
+      <div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="glass p-6 reveal">
+          <h3 class="font-semibold">Our Mission</h3>
+          <p class="mt-3 text-sm text-slate-300">Make career growth accessible by combining hands-on projects, mentor guidance, and personalized AI coaching so learners can confidently apply for real roles.</p>
+        </div>
+
+        <div class="glass p-6 reveal" style="transition-delay:120ms">
+          <h3 class="font-semibold">What we value</h3>
+          <ul class="mt-3 text-sm text-slate-300 space-y-2">
+            <li><strong>Practical learning</strong> — building real projects that demonstrate ability.</li>
+            <li><strong>Mentorship</strong> — human guidance to accelerate growth.</li>
+            <li><strong>Equity</strong> — opportunities for all backgrounds.</li>
+          </ul>
+        </div>
+
+        <div class="glass p-6 reveal" style="transition-delay:180ms">
+          <h3 class="font-semibold">Our story</h3>
+          <p class="mt-3 text-sm text-slate-300">Started by graduates and mentors, SkillBridge began as a community project to help students get internship-ready. Over time it grew into a platform combining mentor networks and lightweight AI assistance.</p>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <h3 class="text-xl font-semibold">Team</h3>
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="glass p-4 flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=60" alt="Co-founder" class="w-12 h-12 rounded-full object-cover" />
+            <div>
+              <div class="font-semibold">Shabana R.</div>
+              <div class="text-xs text-slate-300">Co-founder • Product</div>
+            </div>
+          </div>
+
+          <div class="glass p-4 flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1545996124-1d58e6e1d6f0?auto=format&fit=crop&w=80&q=60" alt="CTO" class="w-12 h-12 rounded-full object-cover" />
+            <div>
+              <div class="font-semibold">Amit K.</div>
+              <div class="text-xs text-slate-300">CTO • Engineering</div>
+            </div>
+          </div>
+
+          <div class="glass p-4 flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=crop&w=80&q=60" alt="Head of Community" class="w-12 h-12 rounded-full object-cover" />
+            <div>
+              <div class="font-semibold">Leena S.</div>
+              <div class="text-xs text-slate-300">Head of Community</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
+      <h2 class="text-2xl font-semibold">Pricing</h2>
+      <p class="text-slate-300 mt-2">Plans for students and enterprises.</p>
+
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass p-6 text-center">
+          <div class="text-sm text-slate-300">Free</div>
+          <div class="text-3xl font-extrabold mt-3">$0</div>
+          <ul class="mt-4 text-sm text-slate-300 space-y-2">
+            <li>Basic tools</li>
+            <li>Access to internships</li>
+            <li>Community mentors</li>
+          </ul>
+          <button class="mt-6 px-4 py-2 rounded bg-white/6">Get Started</button>
+        </div>
+
+        <div class="glass p-6 text-center border-2 border-gradient-to-r from-primary to-accent lg:scale-105">
+          <div class="text-sm text-slate-300">Pro Student</div>
+          <div class="text-3xl font-extrabold mt-3">$9/mo</div>
+          <ul class="mt-4 text-sm text-slate-300 space-y-2">
+            <li>AI mentor</li>
+            <li>Resume builder + templates</li>
+            <li>Mock interviews</li>
+          </ul>
+          <button class="mt-6 px-4 py-2 rounded bg-gradient-to-r from-primary to-accent">Start Trial</button>
+        </div>
+
+        <div class="glass p-6 text-center">
+          <div class="text-sm text-slate-300">Enterprise</div>
+          <div class="text-3xl font-extrabold mt-3">Contact</div>
+          <ul class="mt-4 text-sm text-slate-300 space-y-2">
+            <li>Team onboarding</li>
+            <li>Dedicated mentors</li>
+            <li>Custom analytics</li>
+          </ul>
+          <button class="mt-6 px-4 py-2 rounded border border-white/10">Contact Sales</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
+      <h2 class="text-2xl font-semibold">FAQ</h2>
+      <div class="mt-6 space-y-3">
+        <details class="glass p-4">
+          <summary class="font-semibold">How do I apply for internships?</summary>
+          <p class="mt-2 text-slate-300 text-sm">Create a profile, browse matches, and click Apply — track applications in your dashboard.</p>
+        </details>
+        <details class="glass p-4">
+          <summary class="font-semibold">Are mentors vetted?</summary>
+          <p class="mt-2 text-slate-300 text-sm">Yes. Mentors are verified professionals and their profiles include experience and reviews.</p>
+        </details>
+        <details class="glass p-4">
+          <summary class="font-semibold">Is there a student discount?</summary>
+          <p class="mt-2 text-slate-300 text-sm">Students can access a Pro Student plan at a subsidized rate — check pricing for details.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
+      <h2 class="text-2xl font-semibold">Contact Us</h2>
+      <p class="text-slate-300 mt-2">Questions or partnerships? Reach out.</p>
+
+      <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="glass p-6">
+          <h3 class="font-semibold">Get in touch</h3>
+          <p class="text-sm text-slate-300 mt-2">Email: hello@skillbridge.example</p>
+          <p class="text-sm text-slate-300 mt-1">Phone: +91 98765 43210</p>
+          <div class="mt-4 flex gap-3">
+            <a aria-label="twitter" class="w-9 h-9 rounded bg-white/6 flex items-center justify-center">T</a>
+            <a aria-label="linkedin" class="w-9 h-9 rounded bg-white/6 flex items-center justify-center">in</a>
+            <a aria-label="github" class="w-9 h-9 rounded bg-white/6 flex items-center justify-center">GH</a>
+          </div>
+        </div>
+
+        <form class="lg:col-span-2 glass p-6" aria-label="contact form" onsubmit="return false">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input aria-label="Name" placeholder="Name" class="p-3 rounded bg-white/3 border border-white/6" />
+            <input aria-label="Email" placeholder="Email" class="p-3 rounded bg-white/3 border border-white/6" />
+          </div>
+          <textarea aria-label="Message" placeholder="Message" class="w-full mt-4 p-3 rounded bg-white/3 border border-white/6 h-28"></textarea>
+          <button class="mt-4 px-4 py-2 rounded bg-gradient-to-r from-primary to-accent">Send Message</button>
+        </form>
+      </div>
+
+      <div class="mt-6 glass p-4">
+        <div class="text-sm text-slate-300">Google Map placeholder</div>
+        <div class="mt-2 h-48 bg-white/5 rounded flex items-center justify-center">Map</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-12 bg-[rgba(2,6,23,0.6)] py-8">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded bg-gradient-to-br from-primary to-accent flex items-center justify-center">SB</div>
+        <div>
+          <div class="font-semibold">SkillBridge</div>
+          <div class="text-sm text-slate-300">© 2026 SkillBridge. All rights reserved.</div>
+        </div>
+      </div>
+
+      <div class="flex gap-6 text-sm text-slate-300">
+        <a href="#">Careers</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function applyTheme(mode) {
+      const lightMode = mode === 'light';
+      body.classList.toggle('light-mode', lightMode);
+      body.classList.toggle('dark-mode', !lightMode);
+
+      if (themeToggle) {
+        const icon = themeToggle.querySelector('.theme-icon');
+        const label = themeToggle.querySelector('.theme-label');
+        if (icon) icon.textContent = lightMode ? '☀️' : '🌙';
+        if (label) label.textContent = lightMode ? 'Light' : 'Dark';
+        themeToggle.setAttribute('aria-label', lightMode ? 'Switch to dark mode' : 'Switch to light mode');
+        themeToggle.setAttribute('aria-pressed', String(lightMode));
+      }
+
+      try {
+        localStorage.setItem('skillbridge-theme', mode);
+      } catch (error) {
+        console.warn('Theme preference could not be saved.', error);
+      }
+    }
+
+    try {
+      const savedTheme = localStorage.getItem('skillbridge-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+    } catch (error) {
+      applyTheme('dark');
+    }
+
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const nextMode = body.classList.contains('light-mode') ? 'dark' : 'light';
+        applyTheme(nextMode);
+      });
+    }
+
+    // Animate counters
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+      const update = () => {
+        const target = +counter.getAttribute('data-target');
+        const current = +counter.innerText.replace(/,/g,'') || 0;
+        const increment = Math.ceil(target / 100);
+        if (current < target) {
+          counter.innerText = Math.min(current + increment, target);
+          setTimeout(update, 18);
+        } else {
+          counter.innerText = target.toLocaleString();
+        }
+      };
+      // start when visible
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { update(); io.disconnect(); }
+        });
+      });
+      io.observe(counter);
+    });
+
+    // Simple reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, {threshold: 0.12});
+    reveals.forEach(r => io.observe(r));
+
+    // Chat form sample behavior
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatBox = document.getElementById('chat');
+
+    if (chatForm && chatInput && chatBox) {
+      chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const text = chatInput.value.trim();
+        if (!text) return;
+        const userMsg = document.createElement('div');
+        userMsg.className = 'chat-bubble text-sm text-slate-300';
+        userMsg.textContent = 'Student: ' + text;
+        chatBox.appendChild(userMsg);
+        chatInput.value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Simulated AI reply (static rules for demo)
+        setTimeout(() => {
+          const aiMsg = document.createElement('div');
+          aiMsg.className = 'chat-bubble text-sm bg-white/5';
+          aiMsg.textContent = generateReply(text);
+          chatBox.appendChild(aiMsg);
+          chatBox.scrollTop = chatBox.scrollHeight;
+        }, 700 + Math.random()*600);
+      });
+    }
+
+    function generateReply(text) {
+      const lower = text.toLowerCase();
+      if (lower.includes('full stack') || lower.includes('fullstack')) {
+        return 'AI: Based on your profile, learn HTML, CSS, JavaScript, React, Node.js, and MongoDB. Build a portfolio with 3 projects (portfolio, e-commerce, task app).';
+      }
+      if (lower.includes('resume')) {
+        return 'AI: Use the resume builder, highlight projects, include metrics, and tailor for each role. I can suggest bullet points if you paste your experience.';
+      }
+      return 'AI: Great question — assess your interests, pick a learning path, build projects, then apply to internships. Ask me to recommend a roadmap.';
+    }
+
+    const loginForm = document.getElementById('login-form');
+    const loginStatus = document.getElementById('login-status');
+
+    if (loginForm && loginStatus) {
+      loginForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        if (!emailInput || !passwordInput) return;
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        if (!email || !password) {
+          loginStatus.textContent = 'Please enter both email and password.';
+          loginStatus.classList.remove('hidden');
+          return;
+        }
+
+        loginStatus.textContent = `Demo login successful for ${email}. This is a frontend-only UI.`;
+        loginStatus.classList.remove('hidden');
+      });
+    }
+
+    // Accessibility: enable keyboard focus outlines for keyboard users only
+    function handleFirstTab(e) {
+      if (e.key === 'Tab') {
+        document.body.classList.add('user-is-tabbing');
+        window.removeEventListener('keydown', handleFirstTab);
+      }
+    }
+    window.addEventListener('keydown', handleFirstTab);
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Callback</title>
+</head>
+<body>
+
+<script>
+
+function DoPayment(amount, callback){
+
+    console.log("Payment Amount : ₹" + amount);
+    console.log("Payment Status : Pending");
+
+    callback();
+}
+
+function PaymentSuccess(){
+
+    console.log("Payment Status : Success");
+    console.log("Order Confirmed");
+}
+
+DoPayment(1000, PaymentSuccess);
+
+</script>
+
+</body>
+</html>

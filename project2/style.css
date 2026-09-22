@@ -1,0 +1,121 @@
+/* Google Font !!*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+}
+
+/* Sidebar */
+nav{
+    position:sticky;
+    top:0;
+}
+
+.nav-link{
+    border-radius:10px;
+    transition:.2s;
+    padding:12px;
+}
+
+.nav-link:hover{
+    background:#0564f2;
+    color:#fff !important;
+    transform:translateX(5px);
+}
+
+.nav-link.active{
+    background:#0963e9;
+}
+
+.dashboard-section{
+    display:none;
+}
+
+.dashboard-section.active{
+    display:block;
+}
+
+/* Navbar */
+.navbar{
+    border-radius:0 0 15px 15px;
+}
+
+/* Cards */
+.card{
+    border:none;
+    border-radius:15px;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.card-body i{
+    transition:.2s;
+}
+
+.card:hover i{
+    transform:scale(1.2);
+}
+
+/* Table */
+.table{
+    border-radius:10px;
+    overflow:hidden;
+}
+
+/* Buttons */
+.btn{
+    border-radius:10px;
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:scale(0.05);
+}
+
+/* Progress */
+.progress{
+    border-radius:20px;
+}
+
+/* Footer */
+footer{
+    margin-top:60px;
+}
+
+footer i{
+    cursor:pointer;
+    transition:.3s;
+}
+
+footer i:hover{
+    color:#0d6efd;
+    transform:scale(1.3);
+}
+
+/* Responsive */
+@media(max-width:768px){
+
+    nav{
+        min-height:auto !important;
+    }
+
+    .navbar{
+        margin-top:20px;
+    }
+
+    .card{
+        margin-bottom:20px;
+    }
+
+}

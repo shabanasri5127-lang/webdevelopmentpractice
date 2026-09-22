@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // guess the number game
+        let randomNumber = Math.floor(Math.random() * 6) + 1;
+        // console.log(randomNumber);
+
+        while(true){
+            //== check the value only, === check the value and type
+            let userInput = prompt("Guess the number between 1 to 6");
+            if(userInput == randomNumber){
+                alert('Congratulations! You guessed the correct number');
+                break;//to stop the loop if the user guessed the correct number
+            }
+            else{
+                alert('Sorry, wrong guess. Please try again.');
+            }
+        }   
+    </script>
+</body>
+</html>

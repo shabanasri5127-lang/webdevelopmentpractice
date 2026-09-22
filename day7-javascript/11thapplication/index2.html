@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Function Results</h1>
+    <p id="output"></p>
+   <script>
+
+    function isEven(num) {
+        if (num % 2 === 0) {
+            return true; // Number is even
+        } else {
+            return false; // Number is odd
+        }
+    }
+    const evenResult = isEven(4); // Example usage: Check if 4 is even
+
+
+
+   
+   
+    function isPrime(num) {
+        if (num <= 1) {
+            return false; // Numbers less than or equal to 1 are not prime
+        }
+        for (let i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i === 0) {
+                return false; // Number is divisible by i, so it's not prime
+            }
+        }
+        return true; // Number is prime
+    }
+    const primeResult = isPrime(7); // Example usage: Check if 7 is prime
+
+
+
+    //write the logic sum of 1,2,3,4,5.
+    function sumOfNumbers() {
+        let sum = 0;
+        for (let i = 1; i <= 5; i++) {
+            sum += i;
+        }
+        return sum;
+    }
+    const sumResult = sumOfNumbers(); // Example usage: Calculate the sum of numbers from 1 to 5
+
+    //write a logic of finding rev,"hello","olleh" using function and return value.
+    function reverseString(str) {
+        return str.split('').reverse().join('');
+        
+    }
+    const reversedResult = reverseString("hello"); // Example usage: Reverse the string "hello"
+
+    document.getElementById("output").innerHTML = `
+        4 is even: ${evenResult}<br>
+        7 is prime: ${primeResult}<br>
+        Sum of 1 to 5: ${sumResult}<br>
+        Reverse of hello: ${reversedResult}
+    `;
+</script>
+</body>
+</html>
