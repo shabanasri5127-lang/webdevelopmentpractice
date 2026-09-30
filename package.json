@@ -1,5 +1,25 @@
 {
   "dependencies": {
     "react-router-dom": "^7.18.4"
-  }
+  },
+  "name": "webdevelopment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shabanasri5127-lang/webdevelopmentpractice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/shabanasri5127-lang/webdevelopmentpractice/issues"
+  },
+  "homepage": "https://github.com/shabanasri5127-lang/webdevelopmentpractice#readme"
 }
